@@ -1,26 +1,24 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Snaps</title>
-</head>
-<body>
-    <h1>Snaps</h1>
+<!doctype html>
+<html>
+    <head>
+        <title>Snaps</title>
+    </head>
 
-    {% for message in get_flased_messages() %}
-    <div class="flash">{{ message }}</div>
-    {% endfor %}
+    <body>
+        <h1>Snaps</h1>
 
-    {% if not current_user.is_authenticated() %}
-    <a href="{{ url_for('users.login') }}">login</a>
-    {% else %}
-    <a href="{{ url_for('users.logout') }}">logout</a>
-    {% endif %}
+        {% for message in get_flashed_messages() %}
+        <div class="flash">{{ message }}</div>
+        {% endfor %}
 
-    <div class="content">
-        {% block content %}
-        {% endblock %}
-    </div>
+        {% if not current_user.is_authenticated() %}
+        <a href="{{ url_for('users.login') }}">log in</a>
+        {% else %}
+        <a href="{{ url_for('users.logout') }}">log out</a>
+        {% endif %}
 
-</body>
+        <div class="content">
+            {% block content %}{% endblock %}
+        </div>
+    </body>
 </html>

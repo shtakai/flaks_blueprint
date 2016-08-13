@@ -42,25 +42,41 @@ def login():
     for the LoginForm, but we avoid that for the moment, here.
     """
 
-    if current_user.is_authenticated():
+    # if current_user.is_authenticated():
+        # return redirect(url_for('snaps.listing'))
+    if hasattr(g, 'user') and g.user.is_authenticated():
         return redirect(url_for('snaps.listing'))
 
     form = LoginForm()
-    if form.validate_on.submit():
-        user = User.query.filter_by(
-            username=form.username.data
-        ).first()
+    # if form.validate_on.submit():
+        # user = User.query.filter_by(
+            # username=form.username.data
+        # ).first()
 
-        if not user:
-            flash('no such user exists')
-            return render_template('users/login.html', form=form)
+        # if not user:
+            # flash('no such user exists')
+            # return render_template('users/login.html', form=form)
 
-        if(not flask_bcrypt.check_password_hash(user.password, form.password.data)):
-            flash('invalid password')
+        # if(not flask_bcrypt.check_password_hash(user.password, form.password.data)):
+            # flash('invalid password')
+            # return render_template('users/login.html', form=form)
+
+        # login_user(user, remember=True)
+        # flash('success! you\'re logged in')
+        # return redirect(url_for('snaps.listing'))
+
+    # return render_template('users/login.html', form=form)
+    if form.validate_on_submit():
+
+        user = User.query.filter_by(username=form.username.data).first()
+
+        if not user or not flask_bcrypt.check_password_hash(user.password,
+                form.password.data):
+
+            flash("No such user exists.")
             return render_template('users/login.html', form=form)
 
         login_user(user, remember=True)
-        flash('success! you\'re logged in')
         return redirect(url_for('snaps.listing'))
 
     return render_template('users/login.html', form=form)

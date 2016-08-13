@@ -8,6 +8,7 @@ app = Flask(__name__)
 
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///../snap.db'
 app.config['SECRET_KEY'] = '_-_-_-_----___---___----__'
+
 db = SQLAlchemy(app)
 
 login_manager = LoginManager()
