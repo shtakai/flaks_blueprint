@@ -7,6 +7,7 @@ from flask.ext.bcrypt import Bcrypt
 app = Flask(__name__)
 
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///../snap.db'
+app.config['SECRET_KEY'] = '_-_-_-_----___---___----__'
 db = SQLAlchemy(app)
 
 login_manager = LoginManager()
@@ -15,6 +16,8 @@ flask_bcrypt = Bcrypt(app)
 
 from application.users import models as user_models
 from application.users.views import users
+
+app.register_blueprint(users, url_prefix='/users')
 
 
 @login_manager.user_loader
